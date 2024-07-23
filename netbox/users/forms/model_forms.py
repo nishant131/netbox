@@ -212,14 +212,12 @@ class UserForm(forms.ModelForm):
             self.fields['confirm_password'].required = False
 
     def save(self, *args, **kwargs):
-        instance = super().save(*args, **kwargs)
 
         # On edit, check if we have to save the password
         if self.cleaned_data.get('password'):
-            instance.set_password(self.cleaned_data.get('password'))
-            instance.save()
+            self.instance.set_password(self.cleaned_data.get('password'))
 
-        return instance
+        return super().save(*args, **kwargs)
 
     def clean(self):
 
